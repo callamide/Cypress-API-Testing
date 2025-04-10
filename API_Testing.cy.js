@@ -34,19 +34,19 @@ describe('API Testing with Cypress', () => {
      });
 
      it('get booking by ID', () => {
-        const bookingId = 2407; // Replace with any valid booking ID
+        const id = 1666; // Replace with any valid booking ID
       
         cy.request({
           method: 'GET',
-          url: `https://restful-booker.herokuapp.com/booking/${bookingId}`,
+          url: `https://restful-booker.herokuapp.com/booking/${id}`,
         }).then((response) => {
           expect(response.status).to.eq(200);
           cy.log(JSON.stringify(response.body));
         })
-  });
+       });
 
-  it('get bookings by multiple IDs', () => {
-    const bookingIds = [2407, 1489, 16]; // Replace with valid booking IDs
+    it('get bookings by multiple IDs', () => {
+    const bookingIds = [65, 19, 695, 1666]; // Replace with valid booking IDs
   
     bookingIds.forEach((id) => {
       cy.request({
@@ -84,7 +84,34 @@ describe('API Testing with Cypress', () => {
         console.log('Booking Response:', response.body); // makes the log more reader on browser console
   });
 
-  })
+  });
+
+
+  it('should update the booking details', () => {
+    const bookid = 19;
+    const token = 'ab1514119eda972'; // token
+  
+    cy.request({
+      method: 'PATCH',
+      url: `https://restful-booker.herokuapp.com/booking/${bookid}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Cookie': `token=${token}` // Set the auth token properly
+      },
+      body: {
+        firstname: "Samuel",
+        lastname: "Michelle"
+      }
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      cy.log(JSON.stringify(response.body));
+    });
+  });
+  
+
+
+  
 
 
 });
